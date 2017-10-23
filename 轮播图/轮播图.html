@@ -1,0 +1,141 @@
+<html>
+<head>
+    <style >
+    
+        *{
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+            text-decoration: none;
+        }
+        div ul li {
+            float: left;
+        }
+        /*div div {
+            display: block;
+            width: 20px;
+            height: 20px;
+            /*background-color: white;*/
+        div ul ::after {
+            content: '';
+            
+        }        
+
+     </style>
+</head>
+
+<body>
+<meta charest='utf-8'>
+
+    <div style = 'position:relative;width:520px;height:280px;background-color:red;overflow:hidden;margin-left:100px;'>
+        
+        <ul style = 'position:absolute;width:2080px;height:280px;left:0px;'>
+            <li><a href=""><img src="./1.webp"></a></li>
+            <li><a href=""><img src="./2.jpg"></a></li>
+            <li><a href=""><img src="./3.jpg"></a></li>
+            <li><a href=""><img src="./1.webp"></a></li>
+        </ul>
+        
+    </div>
+    <div style = 'position:relative;margin-left:595px;margin-top:-155px;width:25px;height:38px;'><i class = 'right'><img src="./right.png"></i></div>
+    <div style = 'position:relative;margin-left:100px;margin-top:-38px;width:25px;height:38px;'><i class = 'right'><img src="./left.png"></i></div>
+    <div style = 'position:relative;margin-left:350px;margin-top:98px'><img src="./1.png"><img src="./1.png"><img src="./1.png"></div>
+      
+   
+
+<script type="text/javascript">
+
+    var img = document.getElementsByTagName('img');
+
+    var oDiv2 = document.getElementsByTagName('div')[2];    
+
+    var pic = document.getElementsByTagName('ul')[0];
+
+    function left() {
+        var count = 1;
+        var timer = setInterval(function () {
+            var c;
+            c = parseInt(pic.style.left);
+            if (c < - 1547) {
+                c = 0;
+            };
+            
+            pic.style.left = '';
+            pic.style.left = c - 13 + 'px';
+            count ++;
+           if (count > 40) {
+            clearInterval(timer);
+            };
+        },3)
+    }
+
+    function right() {
+        var count = 1;
+        var timer = setInterval(function () {
+            var c;
+            c = parseInt(pic.style.left);
+            if (c > -1) {
+                c = -1560;
+            };
+            
+            pic.style.left = '';
+            pic.style.left = c + 13 + 'px';
+            count ++;
+           if (count > 40) {
+            console.log(count);
+            clearInterval(timer);
+            };
+        },3)
+    }
+
+        
+    
+   
+    setInterval( function go () {
+        
+        right();
+
+    },5000);
+
+    document.onclick = function (e) {
+        var event = e || window.event;
+        var target = event.target || event.srcElement;
+        if (target == img[4]) {
+            right();
+        }
+        if (target == img[5]) {
+            left();
+        }
+        if (target == img[6]) {
+            if (pic.style.left == '-520px') {
+                right();
+            };
+            if (pic.style.left == '-1040px') {
+                left();
+            }
+        };
+        if (target == img[7]) {
+            if (pic.style.left == '-1040px') {
+                right();
+            }
+            if (pic.style.left == '0px') {
+                left();
+            }
+        };
+        if (target == img[8]) {
+            if (pic.style.left == '-520px') {
+                left();
+            }
+            if (pic.style.left == '0px'){
+                right();
+            }
+        };
+        
+    }
+    
+    
+</script>
+
+
+</body>
+</html>

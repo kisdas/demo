@@ -1,0 +1,255 @@
+<html>
+<head><meta charset='utf-8'></head>
+<body>
+    <style>
+    *{
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+        text-decoration: none;
+    }
+    .score {
+        position: absolute;
+        margin-left: 500px;
+        margin-top: -420px;
+        height: 50px;
+        width: 150px;
+        background-color: white;
+        border: 1px solid;
+    }
+
+
+    div {
+        width: 480px;
+        height: 420px;
+        border: 2px solid;
+        background-color: blue;
+    }
+   
+    li {
+        width: 30px;
+
+        height: 30px;
+        
+        background-color: blue;
+
+        float: left;
+    }
+    .floor {
+        width: 30px;
+
+        height: 30px;
+        
+        background-color: blue;
+
+        float: left;
+    }
+    .snake {
+        width: 24px;
+        height: 24px;
+        background-color: green;
+        border: 3px solid;
+    }
+    .food {
+        width: 30px;
+        height: 30px;
+        background-color: red;
+        border-radius: 50%;
+        overflow: hidden; 
+    }
+       
+     </style>
+
+    <div>
+        
+       <ul><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        </ul>
+               
+
+    </div>
+    <div class = 'score'>得分：</div>   
+
+<script type="text/javascript">
+    
+    var oUl = document.getElementsByTagName('ul')[0];
+    
+    var li = document.getElementsByTagName('li');
+    
+    var scoreDom = document.getElementsByTagName('div');
+    //对屏幕中每一个方块进行编码；
+
+    for (var i = 0; i < li.length; i++) {
+      
+        li[i].order = i;
+
+    };
+
+    
+    
+    //进行头部生成，头一个
+    var snakeHead, snakeOrder, snakeFood, snakeFoodOrder, timer, a, score = 0, key = 1;
+ 
+    snakeOrder = parseInt(Math.random(0, 1) * 224);
+
+    var snakeArr = [];
+
+    var snakeBody = {};
+
+    li[snakeOrder].className = 'snake';
+
+    snakeArr.push(li[snakeOrder]);
+
+
+    
+
+
+    //食物生成函数
+
+    function foodBuild () {
+        
+        snakeFoodOrder = parseInt(Math.random(0, 1) * 224);
+        
+        if (li[snakeFoodOrder].className !== 'snake') {
+            li[snakeFoodOrder].className = 'food';
+        }else {
+            foodBuild();
+        };
+
+    }
+    foodBuild();
+    
+    //方块行进函数；先进行死亡判断，再进行前进，前进之后判断是否得分，不得分则弹出函数最后一位值，得分反之。
+    function go (drection) {
+        
+        a = snakeArr[0];
+        switch (drection) {
+            case 0:
+                if (a.order - 16 < 0 || li[a.order - 16].className == 'snake') {
+                    clearInterval(timer);
+                    alert('game over!');
+                    document.onkeydown = null;
+                    
+                    
+                }else {
+                    snakeArr.unshift(li[a.order - 16]);
+                    snakeArr[0].className = 'snake';
+                }
+                break;
+            case 1:
+                if (a.order + 16 > 224 || li[a.order + 16].className == 'snake') {
+                    clearInterval(timer);
+                    alert('game over!');
+                    document.onkeydown = null;
+                    
+                    
+                    
+                }else {
+                    snakeArr.unshift(li[a.order + 16]);
+
+                    snakeArr[0].className = 'snake';
+                }
+                break;
+            case 2:
+                if (a.order % 16 == 0 || li[a.order - 1].className == 'snake') {
+                clearInterval(timer);
+                alert('game over!');
+                document.onkeydown = null;
+                
+                
+                }else {
+                    snakeArr.unshift(li[a.order - 1]);
+
+                    snakeArr[0].className = 'snake';
+                };
+                break;
+            case 3:
+                if (a.order % 16 == 15 || li[a.order + 1].className == 'snake') {
+                clearInterval(timer);
+                alert('game over!');
+                document.onkeydown = null;
+                
+
+                }else {
+                    snakeArr.unshift(li[a.order + 1]);
+
+                    snakeArr[0].className = 'snake';
+                }
+
+        };
+            
+        if (snakeArr[0].order == snakeFoodOrder) {
+            
+            score++;
+
+            scoreDom[1].innerText = '得分：' + score;
+
+            foodBuild();
+
+        }else {
+
+            snakeArr.pop().className = '';
+        
+        };    
+
+    };
+    
+
+    document.onkeydown = function(e) {
+
+        var event = e || window.event;
+      
+        var target = event.target || event.srcElement;        
+
+        if (event.key == 'ArrowUp') {
+            
+            clearInterval(timer);
+            
+            go(0);
+
+            timer = setInterval('go(0)',500);
+
+        };
+        if (event.key == 'ArrowDown') {
+
+            clearInterval(timer);
+        
+            go(1);
+
+            timer = setInterval('go(1)',500);
+
+        };
+        if (event.key == 'ArrowLeft') {
+
+            clearInterval(timer);
+        
+            go(2);
+
+            timer = setInterval('go(2)',500);   
+
+        };
+        if (event.key == 'ArrowRight') {
+
+            clearInterval(timer);
+        
+            go(3);
+
+            timer = setInterval('go(3)',500);
+
+        }
+    }
+ 
+</script>
+</body>

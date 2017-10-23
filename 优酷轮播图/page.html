@@ -1,0 +1,139 @@
+<html>
+<head>
+	<meta charset='utf-8'>
+	<title>翻页组件</title>
+	<style type="text/css">
+	 *{
+	    	margin: :0px;
+	        padding: 0px;
+	        list-style: none;
+	        text-decoration: none;
+	    }  
+	div ul li{
+		float: left;
+		margin-left: 10px;
+		
+	}
+	div ul .lj{
+		cursor: pointer;
+		color: blue;
+	}
+	</style>
+</head>
+<body>
+	<div class='wrap'>
+
+
+		<ul class='prev'>
+			<li class='lj'>首页</li>
+			<li class='lj'>上一页</li>
+		</ul>
+		<ul class='page'>
+		</ul>
+		<ul class='next'>
+			<li class='lj'>下一页</li>
+			<li class='lj'>尾页</li>
+		</ul>
+		<div>
+            <i style='margin-left:10px;'></i>
+            <input class='turnPageBlock' style='width:50px;'>
+            <button>跳转</button>
+		</div>
+		
+
+		
+	</div>
+	<script type="text/javascript" src="./jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+		
+		(function fanYeZuJian(pageNum,pointNum,pageYe){
+			//为i标签填入值，显示总页数
+			$('i').text('共' + pageNum + '页')
+			//页数跳转的函数
+			function  turnPage (num) {
+				var pointHtml = '';
+				var a = pointNum + 1;
+				
+				if (num == 1) {
+					$('.prev li').text('');
+					$('.next li').eq(0).text('下一页');
+					$('.next li').eq(1).text('尾页');
+				}else if(num == pageNum){
+					$('.next li').text('');
+					$('.prev li').eq(0).text('首页');
+					$('.prev li').eq(1).text('上一页');
+				}else{
+					$('.prev li').eq(0).text('首页');
+					$('.prev li').eq(1).text('上一页');
+					$('.next li').eq(0).text('下一页');
+					$('.next li').eq(1).text('尾页');
+				}
+				var b = num - Math.floor(pointNum/2) - 1;
+				if(b < 0) {
+					b = 0;
+					
+				}else if(b > pageNum - pointNum) {
+					b = pageNum - pointNum;
+					// $('.wrap ul').eq(0).html(prevHtml);
+				}
+				for (var i = 1; i < a; i++) {
+					
+						if(num == i + b){
+							pointHtml += '<li>' + (i + b) + '</li>'
+						}else{
+							pointHtml += '<li class="lj"><a>[' + (i + b) +']</a></li>'
+						}
+					
+				};
+				
+				$('.page').html(pointHtml);
+			}
+			turnPage(pageYe);
+			//获取点击的页码数
+			function getPage() {
+				
+				var a = $(this).text();
+				
+				var reg = /\d{1,}/;
+				a = reg.exec(a);
+				
+				pageYe = +a;	
+			}
+			//为页码，上一页，首页，下一页，尾页，按钮绑定点击事件
+			$('.page').on('click',function(e) {
+				getPage.call(e.target);
+				turnPage(pageYe);
+			})
+			$('.prev li').eq(0).on('click',function(){
+				pageYe = 1;
+				console.log(pageYe);
+				turnPage(pageYe);
+			})
+			$('.prev li').eq(1).on('click',function() {
+				pageYe--;
+				turnPage(pageYe);
+			})
+			$('.next li').eq(0).on('click',function() {
+				pageYe++;
+				turnPage(pageYe);
+			})
+			$('.next li').eq(1).on('click',function() {
+				pageYe = pageNum;
+				turnPage(pageYe);
+			})
+			$('button').on('click',function(){
+				var zhi = $('.turnPageBlock').val();
+				if(zhi >= 1 && zhi <= pageNum && zhi % 1 == 0){
+					pageYe = zhi;
+					turnPage(pageYe);
+				}else{
+					alert('请输入正确的页码数！')
+				}
+			})
+		}(1000,10,88));
+		
+		
+
+	</script>
+</body>
+</html>

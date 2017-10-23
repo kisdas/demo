@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        /*.wrapper{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            width: 200px;
+            height: 200px;
+            perspective: 1200px;
+        }
+        .wrapper .item{
+            position: absolute;
+            left: 50%;
+            transform-style: preserve-3d;
+            width: 100px;
+            height: 100px;
+            transform: translateZ(0px) translateX(-50%);
+            background: red;
+        }*/
+        .box{
+            width: 300px;
+            height: 300px;
+            position: relative;
+            perspective: 1200px;
+        }
+        .box .content{
+            width: 200px;
+            height: 200px;
+            transform-style: preserve-3d;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -100px;
+            margin-left: -100px;
+            animation: move 3s infinite linear both;
+        }
+        @keyframes move{
+            0%{
+                transform: rotateX(0deg) rotateY(0deg);
+            }
+            50%{
+                transform: rotateX(180deg) rotateY(180deg);
+            }
+            100%{
+                transform: rotateX(360deg) rotateY(360deg);
+            }
+        }
+        .box .content:hover{
+            animation-play-state: paused;
+        }
+     
+        
+        .box .content div{
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            line-height: 200px;
+            text-align: center;
+            opacity: 0.5;
+            color: #fff;
+            font-size: 30px;
+            backface-visibility: visible;
+        }
+        .box .content div:nth-of-type(1){
+            background: red;
+            transform: translateZ(100px);
+        }
+        .box .content div:nth-of-type(2){
+            background: green;
+            transform: rotateX(90deg) translateZ(100px);
+        }
+        .box .content div:nth-of-type(3){
+            background: orange;
+            transform: rotateX(180deg) translateZ(100px);
+        }
+        .box .content div:nth-of-type(4){
+            background: blue;
+            transform: rotateX(-90deg) translateZ(100px);
+        }
+        .box .content div:nth-of-type(5){
+            background: deeppink;
+            transform: rotateY(90deg) translateZ(100px);
+        }
+        .box .content div:nth-of-type(6){
+            background: #000;
+            transform: rotateY(-90deg) translateZ(100px);
+        }
+    </style>
+</head>
+<body>
+    <!--<div class="wrapper">
+        <div class="item"></div>
+    </div>-->
+    <div class="box">
+        <div class="content">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+        </div>
+    </div>
+
+</body>
+</html>

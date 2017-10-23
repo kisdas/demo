@@ -1,0 +1,209 @@
+<html>
+<head>
+    <style >
+
+     *{
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+            text-decoration: none;
+        }
+
+    div {
+    	width: 480px;
+    	height: 420px;
+    	
+    }
+   
+    li {
+    	width: 26px;
+    	height: 26px;
+    	border: 2px solid;
+      background-color: blue;
+    	float: left;
+    }
+    
+       
+     </style>
+</head>
+
+<body>
+<meta charest='utf-8'>
+    <div>
+        
+       <ul><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+           <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        </ul>
+               
+
+    </div>   
+<script type="text/javascript">
+    
+    var oUl = document.getElementsByTagName('ul')[0];
+    
+    var li = document.getElementsByTagName('li');
+
+    var tntArr = [], tntNum = 30, tntArr2 = [], safePlace = 0;
+        //将雷区小块进行循环，为小块设置属性（num：小雷块的编号，编号唯一且具有规律，以保证方块的唯一性和规律性；tnt：表示小方块是否藏雷）
+    	  for (var i = 0; i < li.length; i++) {
+
+          if ((parseInt(i / 16) + 13) % 13 !== 0 && ((i % 16) + 15) % 15 !== 0) {
+
+            li[i].num = i;
+
+            li[i].tnt = 0;
+
+            tntArr.push(i);//中间的雷区独立出来
+              
+           
+          } else {
+            li[i].tnt = 0;//为最外围设置雷属性0，保证程序的正常执行，而又不影响内部扫雷程序的执行。
+            li[i].style.backgroundColor = 'black';
+          }
+               
+    	  };
+        tntArr.sort(function (a, b) {
+          return Math.random (0, 1) - 0.5;
+        })
+        for (var i = 70; i < 100; i++) {
+          li[tntArr[i]].tnt = 1;
+          tntArr2.push(li[tntArr[i]]);
+        };//将数组乱序，从中选择连续30个数，即为随机数；
+    
+
+    
+    oUl.oncontextmenu = function (e) {
+        return false;
+    }//清除鼠标右键默认事件
+    oUl.onmousedown = function (e) {
+        
+        var event = e || window.event;
+      
+        var target = event.target || event.srcElement;
+        
+        if (event.button == 2) {
+            switch (target.innerText) {
+              case '':
+
+                  target.innerText = 'X';
+                  
+ 
+                  break;
+ 
+              case 'X':
+ 
+                  target.innerText = '';
+                  
+                  break;
+            }//插旗事件
+            
+            
+        };
+    }
+
+    oUl.onclick = function (e) {
+
+        var event = e || window.event;
+    	
+        var target = event.target || event.srcElement;
+      
+        
+    	  if(target.innerText == '') {
+
+        
+            if (li[target.num].tnt == 1){
+        	
+                for (var i = 0; i < tntArr2.length; i++) {
+                   
+                   if(tntArr2[i].innerText == 'X') {
+                        tntNum--;
+                   }; 
+                   tntArr2[i].innerText = 'b';
+          
+                };//将所有的雷显示在雷区中； 	
+                
+                alert('you are lose!剩余雷数：' + tntNum);//为用户展示还为扫出的雷的数目；
+                // oUl.onclick = null;
+                // oUl.onmousedown = null;
+                
+        	
+            }else {
+                  var a = target.num;
+                      
+                 (function deep(li, a) {   
+                      if ((parseInt(a / 16) + 13) % 13 !== 0 && ((a % 16) + 15) % 15 !== 0){//条件判断，表示除去雷区最外层方块，只对剩下的方块进行扫视；使扫雷的扩散处理算法更简洁；
+                      li[a].innerText = li[a + 1].tnt + li[a + 15].tnt + li[a + 16].tnt + li[a + 17].tnt + li[a - 1].tnt + li[a - 15].tnt + li[a - 16].tnt + li[a - 17].tnt;//扫视被点击方块；显示周围雷数，若为零，进行下一步处理；
+                      li[a].style.backgroundColor = 'white';//改变方块背景色，使用户和程序得知该方块已被扫视；
+                      safePlace++;//记录已被检测的安全方块的数目；
+                      
+                      if(li[a].innerText == 0){
+
+                          li[a].innerText = '';//将周围无雷的方块进行处理，使其变为空白，使用户界面清爽；
+                          if (li[a - 17].style.backgroundColor !== 'white') {
+                              deep(li,a - 17);
+                          };
+
+                          if (li[a - 16].style.backgroundColor !== 'white') {
+                              deep(li,a - 16);
+                          };
+                          if (li[a - 15].style.backgroundColor !== 'white') {
+                              deep(li,a - 15)
+                          };
+                          if (li[a - 1].style.backgroundColor !== 'white') {
+                              deep(li, a - 1);
+                          };
+                          if (li[a + 1].style.backgroundColor !== 'white') {
+                              deep(li, a + 1);
+                          };
+                          if (li[a + 15].style.backgroundColor !== 'white') {
+                              deep(li,a + 15)
+                          };
+                          if (li[a + 16].style.backgroundColor !== 'white') {
+                              deep(li,a + 16)
+                          };
+                          if (li[a + 17].style.backgroundColor !== 'white') {
+                              deep(li, a + 17)
+                          };//程序判断：当方块颜色为白色时，表示该方块已经经过扫视，则不必且一定不要再对该方块进行扫视处理，以避免陷入死循环；
+
+                          
+                      }
+                          
+                      
+                  }
+                       
+              }(li, a));
+          if(safePlace == 138){
+              alert('well done！666 999 ！');
+                  // oUl.onclick = null;
+                  // oUl.onmousedown = null;
+          }
+          
+          }
+      }
+  }
+  
+              
+      
+      
+    
+  
+
+
+
+
+</script>
+
+</body>
+</html>

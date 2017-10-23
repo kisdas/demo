@@ -1,0 +1,591 @@
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <style >
+    
+        *{
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+            text-decoration: none;
+        }
+
+       
+
+        .game  {
+            display: block;
+            margin: auto;
+            width: 200px;
+            height: 420px;
+            /*background-color: orange;*/
+            border: 1px solid;
+        }
+        div div {
+            float: left;
+        }
+        .total .game {
+            margin-left: 50px;
+        }
+        .stoneBlock {
+            width: 80px;
+            height: 80px;
+            border: 1px solid;
+            margin-left: 20px;
+        }
+        
+        .code {
+            width: 80px;
+            height: 100px;
+            margin-left: -80px;
+            margin-top: 120px;
+            border: 1px solid;
+        }
+        .no {
+            background-color: white;
+        }
+        .blue {
+            background-color: blue;
+        }
+        
+        li {
+            width: 18px;
+            height: 18px;
+            border: 1px solid;
+            /*background-color: red;*/
+            float: left;
+        }
+        .material {
+            background-color: red;
+        }
+
+     </style>
+     
+</head>
+
+<body>
+    
+    <div class = 'total'>
+        <div class ='game'>
+        <ul >
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+            <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        </ul>
+        </div>
+        <div class = 'stoneBlock'>
+            <ul >
+                <li></li><li></li>
+                <li></li><li></li>
+                <li></li><li></li>
+                <li></li><li></li>
+            </ul>
+        </div>
+        <div class = 'code'>得分</div>
+        
+    </div>
+        
+   
+
+<script type="text/javascript">
+
+    var div = document.getElementsByTagName('div');
+
+    var li = document.getElementsByTagName('li');
+    
+    var block = [], movingBlock = [], disappear = [], blockStyle, timer, blockDrection = 1, turnIndex, lowSild = 10, score = 0, ddd;
+    var flag = 1;
+    div[1].style.height = '360px';
+
+    for (var i = 0; i < 209; i++) {
+    
+        li[i].order = i;
+    
+        li[i].className = 'no';
+    
+    };
+    
+    for (var i = 0; i < 10; i++) {
+    
+        li[i + 200].className = 'blue';
+        li[i + 200].style.height = '0px';
+    
+    };
+    
+    for (var i = 0; i < 8; i++) {
+    
+        block.push(li[217 - i]);
+    
+    };
+    for (var i = 0; i < 20; i++) {
+        li[i].style.height = '0px';
+    };
+    
+    // blockStyle = parseInt(Math.random(0, 1) * 7);
+    blockStyle = 0;
+
+    
+    switch (blockStyle){
+            case 0:
+                block[1].className = 'material';
+                block[2].className = 'material';
+                block[3].className = 'material';
+                block[0].className = 'material';
+                break;
+            case 1:
+                block[2].className = 'material';
+                block[6].className = 'material';
+                block[5].className = 'material';
+                block[3].className = 'material';
+                break;
+            case 2:
+                block[2].className = 'material';
+                block[6].className = 'material';
+                block[5].className = 'material';
+                block[7].className = 'material';
+                break;
+            case 3:
+                block[1].className = 'material';
+                block[6].className = 'material';
+                block[5].className = 'material';
+                block[7].className = 'material';
+                break;
+            case 4:
+                block[3].className = 'material';
+                block[6].className = 'material';
+                block[5].className = 'material';
+                block[7].className = 'material';
+                break;
+            case 5:
+                block[1].className = 'material';
+                block[6].className = 'material';
+                block[5].className = 'material';
+                block[2].className = 'material';
+                break;
+            case 6:
+                block[1].className = 'material';
+                block[6].className = 'material';
+                block[2].className = 'material';
+                block[7].className = 'material';
+                break;
+            }
+    function scoerLook (lowSild) {
+        disappear = [];
+        for (var i = 0; i < 4; i++) {
+            flag = 1;
+            var j = lowSild - i;
+            for (var a = 0; a < 10; a++) {
+                if (li[j * 10 + a].className == 'no'){
+                    flag = 0;
+                }
+
+            };
+            if(flag == 1) {
+                disappear.unshift(j);
+            };
+            
+        }
+        console.log (disappear);
+        for (var i = 0; i < disappear.length; i++) {
+            (function  (j) {
+            var a = disappear[j];
+            for (var i = 0; i < 10; i++) {
+                    li[a * 10 + i].className = 'no';
+
+                };
+                for (var i = 1; i < (a-1) * 10; i++) {
+                    li[(a + 1) * 10 - i].className = li[a * 10 - i].className; 
+                };
+                score++;
+                div[3].innerText = '得分：' + score;
+            }(i))
+            
+        };
+    }
+    // 方块生成事件
+    function blockBuild () {
+        
+
+        
+
+        // console.log (lowSild);
+        clearInterval(timer);
+        movingBlock = [];//清空运输方块。
+        blockDrection = 1;
+        scoerLook (lowSild);
+        lowSild = 1;
+        for (var i = 0; i < 4; i++) {
+            li[3 + i].className = block[7 - i].className;
+            if (li[3 + i].className == 'material') {
+                movingBlock.push(li[3 + i]);
+            };
+                        
+            li[13 + i].className = block[3 - i].className;
+            if (li[13 + i].className == 'material') {
+                movingBlock.push(li[13 + i]);
+            };
+                        
+        };//将方框中图形传递到游戏界面；
+        for (var i = 0; i < 8; i++) {
+            block[i].className = 'no';
+        };
+        
+            movingBlock.push(blockStyle);
+        
+        
+        // blockStyle = parseInt(Math.random(0, 1) * 7);
+        blockStyle = 0;
+        
+        switch (blockStyle){
+            case 0:
+                block[1].className = 'material';
+                block[2].className = 'material';
+                block[3].className = 'material';
+                block[0].className = 'material';
+                break;
+            case 1:
+                block[2].className = 'material';
+                block[6].className = 'material';
+                block[5].className = 'material';
+                block[3].className = 'material';
+                break;
+            case 2:
+                block[2].className = 'material';
+                block[6].className = 'material';
+                block[5].className = 'material';
+                block[7].className = 'material';
+                break;
+            case 3:
+                block[1].className = 'material';
+                block[6].className = 'material';
+                block[5].className = 'material';
+                block[7].className = 'material';
+                break;
+            case 4:
+                block[3].className = 'material';
+                block[6].className = 'material';
+                block[5].className = 'material';
+                block[7].className = 'material';
+                break;
+            case 5:
+                block[1].className = 'material';
+                block[6].className = 'material';
+                block[5].className = 'material';
+                block[2].className = 'material';
+                break;
+            case 6:
+                block[1].className = 'material';
+                block[6].className = 'material';
+                block[2].className = 'material';
+                block[7].className = 'material';
+                break;
+            }//为下一个图形装填；
+            
+                    
+            timer = setInterval('down ()',1000);//方块开始定时下落   
+            
+                
+    };
+    blockBuild();
+    //方块下落事件
+    function down () {
+                   
+        for (var i = 0; i < 4; i++) {
+
+            movingBlock[i].className = 'no';
+
+        };
+        for (var i = 0; i < 4; i++) {
+            
+            li[movingBlock[i].order + 10].className = 'material';
+            
+            movingBlock[i] = li[movingBlock[i].order + 10];
+        
+        }
+        lowSild ++;//方块完成一次下落，下落值加一
+        if (li[movingBlock[0].order + 10].className == 'blue' || li[movingBlock[1].order + 10].className == 'blue' || li[movingBlock[2].order + 10].className == 'blue' || li[movingBlock[3].order + 10].className == 'blue') {
+                 
+            if (lowSild < 3) {
+                alert('game over!');
+                clearInterval(timer);
+                document.onkeydown = null;
+            }else {
+                for (var i = 0; i < 4; i++) {
+                    movingBlock[i].className = 'blue';
+                    
+                };
+                blockBuild();
+            }
+            
+               
+        
+        }//判断是否进行下一次下落；?
+ 
+    }
+    
+
+    
+    
+
+    
+
+    //键盘事件
+    document.onkeydown = function  (e) {
+        var event = e || window.event;
+        if(event.key == 'ArrowDown') {
+            if (li[movingBlock[0].order + 10].className !== 'blue' && li[movingBlock[1].order + 10].className !== 'blue' && li[movingBlock[2].order + 10].className !== 'blue' && li[movingBlock[3].order + 10].className !== 'blue') {
+                for (var i = 0; i < 4; i++) {
+                    movingBlock[i].className = 'no';
+                        
+                };
+                for (var i = 0; i < 4; i++) {
+                    li[movingBlock[i].order + 10].className = 'material';
+                    movingBlock[i] = li[movingBlock[i].order + 10];
+                }
+                lowSild ++;           
+               
+            }
+            if (li[movingBlock[0].order + 10].className == 'blue' || li[movingBlock[1].order + 10].className == 'blue' || li[movingBlock[2].order + 10].className == 'blue' || li[movingBlock[3].order + 10].className == 'blue') {
+                if (lowSild < 3) {
+                    alert('game over!');
+                    clearInterval(timer);
+                    document.onkeydown = null;
+                }else {
+                    for (var i = 0; i < 4; i++) {
+                        movingBlock[i].className = 'blue';
+                    
+                    };
+                    blockBuild();
+                }  
+        
+            }
+               
+        }
+        if(event.key == 'ArrowLeft') {
+            
+            if ((movingBlock[0].order % 10) * (movingBlock[1].order % 10) *(movingBlock[2].order % 10) *(movingBlock[3].order % 10) !== 0 && li[movingBlock[0].order - 1].className !== 'blue' && li[movingBlock[1].order - 1].className !== 'blue' && li[movingBlock[2].order - 1].className !== 'blue' && li[movingBlock[3].order - 1].className !== 'blue'){
+                for (var i = 0; i < 4; i++) {
+                    movingBlock[i].className = 'no';
+                        
+                };
+                for (var i = 0; i < 4; i++) {
+                    movingBlock[i].className = 'no';
+                        
+                };
+                
+                 for (var i = 0; i < 4; i++) {
+                    li[movingBlock[i].order - 1].className = 'material';
+                    movingBlock[i] = li[movingBlock[i].order - 1];
+                }            
+            }
+                
+        }
+        if(event.key == 'ArrowRight') {
+            
+            if ((movingBlock[0].order % 10) !== 9 && (movingBlock[1].order % 10) !== 9 && (movingBlock[2].order % 10) !== 9 && (movingBlock[3].order % 10) !== 9 && li[movingBlock[0].order + 1].className !== 'blue' && li[movingBlock[1].order + 1].className !== 'blue' && li[movingBlock[2].order + 1].className !== 'blue' && li[movingBlock[3].order + 1].className !== 'blue'){
+                for (var i = 0; i < 4; i++) {
+                    movingBlock[i].className = 'no';    
+                };
+                for (var i = 0; i < 4; i++) {
+                    li[movingBlock[i].order + 1].className = 'material';
+                    movingBlock[i] = li[movingBlock[i].order + 1];
+                }            
+            }
+               
+        }
+        if(event.key == 'ArrowUp') {
+            turnIndex = 0;
+
+
+
+            if(movingBlock[4] == 0 && lowSild > 2) {
+                for (var i = 0; i < 4; i++) {
+                    movingBlock[i].className = 'no';
+                        
+                };
+                if (blockDrection % 2 == 1 && li[movingBlock[3].order - 1].className == 'no' && li[movingBlock[2].order - 10].className == 'no' && li[movingBlock[1].order - 19].className == 'no' && li[movingBlock[0].order - 28].className == 'no') {
+                    movingBlock[3] = li[movingBlock[3].order - 1];
+                    movingBlock[2] = li[movingBlock[2].order - 10];
+                    movingBlock[1] = li[movingBlock[1].order - 19];
+                    movingBlock[0] = li[movingBlock[0].order - 28];
+                    turnIndex = 1;    
+                };
+                if (blockDrection  % 2 == 0 && movingBlock[0].order % 10 < 9 && movingBlock[0].order % 10 > 1 && li[movingBlock[3].order + 1].className == 'no' && li[movingBlock[2].order + 10].className == 'no' && li[movingBlock[1].order + 19].className == 'no' && li[movingBlock[0].order + 28].className == 'no') {
+                    movingBlock[3] = li[movingBlock[3].order + 1];
+                    movingBlock[2] = li[movingBlock[2].order + 10];
+                    movingBlock[1] = li[movingBlock[1].order + 19];
+                    movingBlock[0] = li[movingBlock[0].order + 28];
+                    turnIndex = 1;
+                };
+                
+                
+            }
+
+
+
+            if (movingBlock[4] == 1) {
+                for (var i = 0; i < 4; i++) {
+                    movingBlock[i].className = 'no';
+                };
+                if (blockDrection % 2 == 1 && li[movingBlock[0].order - 10].className == 'no' && li[movingBlock[3].order - 12].className == 'no') {
+                    movingBlock[0] = li[movingBlock[0].order - 10];
+                    movingBlock[3] = li[movingBlock[3].order - 12];
+                    turnIndex = 1;
+                };
+                if (blockDrection % 2 == 0 && movingBlock[2].order % 10 !== 9 && li[movingBlock[0].order + 10].className == 'no' && li[movingBlock[3].order + 12].className == 'no') {
+                    movingBlock[0] = li[movingBlock[0].order + 10];
+                    movingBlock[3] = li[movingBlock[3].order + 12];
+                    turnIndex = 1;
+                }
+            };
+
+
+
+
+            if (movingBlock[4] == 2 && lowSild > 1) {
+                for (var i = 0; i < 4; i++) {
+                    movingBlock[i].className = 'no';
+                };
+                if (blockDrection % 4 == 1 && li[movingBlock[3].order - 11].className == 'no') {
+                    movingBlock[3] = li[movingBlock[3].order - 11];
+                    turnIndex = 1;
+                };
+                if (blockDrection % 4 == 2 && movingBlock[1].order % 10 !== 9 && li[movingBlock[0].order + 10].className + li[movingBlock[3].order + 21].className == 'nono') {
+                    movingBlock[0] = li[movingBlock[0].order + 10];
+                    movingBlock[3] = li[movingBlock[3].order + 21];
+                    turnIndex = 1;
+
+                }
+                if (blockDrection % 4 == 3 && li[movingBlock[0].order - 19].className + li[movingBlock[3].order - 10].className == 'nono') {
+                    movingBlock[0] = li[movingBlock[0].order - 19];
+                    movingBlock[3] = li[movingBlock[3].order - 10];
+                    turnIndex = 1;
+                }
+                if (blockDrection % 4 == 0 && movingBlock[0].order % 10 !== 0 && li[movingBlock[0].order + 9].className == 'no') {
+                    movingBlock[0] = li[movingBlock[0].order + 9];
+                    turnIndex = 1;
+                };
+            };
+
+
+
+
+            if (movingBlock[4] == 3 && lowSild > 1 ) {
+                for (var i = 0; i < 4; i++) {
+                    movingBlock[i].className = 'no';
+                    };
+                if (blockDrection % 4 == 1 && li[movingBlock[3].order - 10].className + li[movingBlock[0].order + 11].className == 'nono') {
+                    
+                    movingBlock[1] = li[movingBlock[1].order - 9];
+                    movingBlock[0] = li[movingBlock[0].order + 11];
+                    turnIndex = 1;
+
+                };
+                if (blockDrection % 4 == 2 && movingBlock[0].order % 10 !== 0 && li[movingBlock[1].order + 8].className + li[movingBlock[2].order + 8].className == 'nono') {
+                    movingBlock[1] = li[movingBlock[1].order + 8];
+                    movingBlock[2] = li[movingBlock[2].order + 8];
+                    turnIndex = 1;
+                };
+                if (blockDrection % 4 == 3 && li[movingBlock[0].order - 21].className + li[movingBlock[3].order - 21].className == 'nono') {
+                    movingBlock[0] = li[movingBlock[0].order - 21];
+                    movingBlock[3] = li[movingBlock[3].order - 21];
+                    turnIndex = 1;
+                };
+                if (blockDrection % 4 == 0 && li[movingBlock[0].order + 10].className == 'no' && li[movingBlock[1].order + 1].className == 'no' && li[movingBlock[2].order - 8].className == 'no' && li[movingBlock[3].order + 21].className == 'no') {
+                    movingBlock[0] = li[movingBlock[0].order + 10];
+                    movingBlock[1] = li[movingBlock[1].order + 1];
+                    movingBlock[2] = li[movingBlock[2].order - 8];
+                    movingBlock[3] = li[movingBlock[3].order + 21];
+                    turnIndex = 1;
+                };
+            };
+
+
+
+
+            if (movingBlock[4] == 4) {
+                for (var i = 0; i < 4; i++) {
+                    movingBlock[i].className = 'no';
+                };
+                if (blockDrection % 4 == 1 && li[movingBlock[0].order - 9].className == 'no' && li[movingBlock[1].order - 20].className == 'no' && li[movingBlock[3].order + 9].className == 'no') {
+                    movingBlock[0] = li[movingBlock[0].order - 9];
+                    movingBlock[1] = li[movingBlock[1].order - 20];
+                    movingBlock[3] = li[movingBlock[3].order + 9];
+                    turnIndex = 1;
+                };
+                if (blockDrection % 4 == 2 && movingBlock[0].order % 10 !== 9 && li[movingBlock[0].order + 21].className == 'no' && li[movingBlock[1].order + 12].className == 'no' && li[movingBlock[2].order + 9].className == 'no') {
+                    movingBlock[0] = li[movingBlock[0].order + 21];
+                    movingBlock[1] = li[movingBlock[1].order + 12];
+                    movingBlock[2] = li[movingBlock[2].order + 9];
+                    turnIndex = 1;
+                };
+                if (blockDrection % 4 == 3 && li[movingBlock[1].order -11].className == 'no' && li[movingBlock[2].order - 9].className == 'no') {
+                    movingBlock[1] = li[movingBlock[1].order -11];
+                    movingBlock[2] = li[movingBlock[2].order - 9];
+                    turnIndex = 1;
+                }
+                if (blockDrection % 4 == 0 && movingBlock[3].order % 10 !== 0 && li[movingBlock[1].order + 19].className == 'no' && li[movingBlock[0].order - 12].className == 'no' && li[movingBlock[3].order - 9].className == 'no') {
+                    movingBlock[1] = li[movingBlock[1].order + 19];
+                    movingBlock[0] = li[movingBlock[0].order - 12];
+                    movingBlock[3] = li[movingBlock[3].order - 9];
+                    turnIndex = 1;
+                };
+            };
+            if (movingBlock[4] == 6) {
+                
+                for (var i = 0; i < 4; i++) {
+                    movingBlock[i].className = 'no';
+                };
+                if (blockDrection % 2 == 1 && li[movingBlock[0].order - 8].className == 'no' && li[movingBlock[3].order - 10].className == 'no') {
+                    movingBlock[0] = li[movingBlock[0].order - 8];
+                    movingBlock[3] = li[movingBlock[3].order - 10];
+                    turnIndex = 1;
+                };
+                if (blockDrection % 2 == 0 && movingBlock[2].order % 10 !== 9 && li[movingBlock[0].order + 8].className == 'no' && li[movingBlock[3].order + 10].className == 'no') {
+                    movingBlock[0] = li[movingBlock[0].order + 8];
+                    movingBlock[3] = li[movingBlock[3].order + 10];
+                    turnIndex = 1;
+                }
+            
+            };
+            blockDrection += turnIndex;
+            for (var i = 0; i < 4; i++) {
+                movingBlock[i].className = 'material';
+            };
+        }
+  
+    }
+    
+    
+
+
+
+
+
+
+   
+    
+
+
+</script>
+
+
+</body>
+</html>
